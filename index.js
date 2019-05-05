@@ -12,29 +12,30 @@ window.onload=function(){
     function setPosition(pos,array){
 
     }
-   function stepUp(direction,coord){
+   function stepUp(direction,coordinates){
        if(direction=='u'){
-        coord.numb--
-        if(i<0){return false}
+        coordinates.numb--
+        if(coordinates.numb<0){return false}
         return true
        }
        if(direction=='r'){
-           coord.char++
-           if(j>7){return false}
+        coordinates.char++
+           if(coordinates.numb>7){return false}
            return true
        }
        if(direction=='d'){
-        coord.numb++
-        if(i>7){return false}
+        coordinates.numb++
+        if(coordinates.numb>7){return false}
         return true
         }
         if(direction=='l'){
-            coord.numb--
-            if(j<0){return false}
+            coordinates.numb--
+            if(coordinates.numb<0){return false}
             return true
        }
-       return true
+       return false
    }
+
    function checkStep(array,i,j){
        if(array[i][j]==undefined){return false}
        return true
@@ -47,7 +48,6 @@ window.onload=function(){
        this.char=char
        this.numb=numb
    }
-   let coord=new Coord(Number(letters.indexOf(input[0])),Number(input[1]))
    let possibilities=[]
    let KnightMoves=[
        ['u','u','r'],
@@ -58,21 +58,21 @@ window.onload=function(){
        ['d','d','l'],
        ['l','l','u'],
        ['l','l','d']
-   ]
-   function TryMove(moves){
-       let flag=true
-       for(let i=0;i<moves.length;i++){
-           for(let j=0;j<moves[i].length;j++){
-                flag=stepUp(moves[i][j],numb,char)
-           }
-           if(flag){
-               possibilities.push([char,numb])
-           }
-           char=Number(letters.indexOf(input[0]))
-           numb=Number(input[1])
-       }
-   }
-   TryMove(KnightMoves)
+    ]
+    function TryMove(moves,coordinates){
+        let flag=true
+        for(let i=0;i<moves.length;i++){
+            for(let j=0;j<moves[i].length;j++){
+                flag=stepUp(moves[i][j],coordinates)
+            }
+            if(flag){
+                possibilities.push(coordinates)
+            }
+            coordinates=new Coord(Number(letters.indexOf(input[0])),Number(input[1]))
+        }
+    }
+    let coord=new Coord(Number(letters.indexOf(input[0])),Number(input[1]))
+    TryMove(KnightMoves,coord)
 
 
 }
