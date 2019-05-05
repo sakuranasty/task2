@@ -1,5 +1,5 @@
 window.onload=function(){
-    let letters=['a','b','c','d','i','f','g','h']
+    let letters=['a','b','c','d','e','f','g','h']
     let board=[]
     for (let i=0;i<8;i++){
         board[i]=[]
@@ -14,8 +14,8 @@ window.onload=function(){
     }
    function stepUp(direction,coordinates){
        if(direction=='u'){
-        coordinates.numb--
-        if(coordinates.numb<0){return false}
+        coordinates.numb++
+        if(coordinates.numb>7){return false}
         return true
        }
        if(direction=='r'){
@@ -24,22 +24,22 @@ window.onload=function(){
            return true
        }
        if(direction=='d'){
-        coordinates.numb++
-        if(coordinates.numb>7){return false}
+        coordinates.numb--
+        if(coordinates.numb<0){return false}
         return true
         }
         if(direction=='l'){
-            coordinates.numb--
-            if(coordinates.numb<0){return false}
+            coordinates.char--
+            if(coordinates.char<0){return false}
             return true
        }
        return false
    }
 
-   function checkStep(array,i,j){
-       if(array[i][j]==undefined){return false}
-       return true
-   }
+//    function checkStep(array,i,j){
+//        if(array[i][j]==undefined){return false}
+//        return true
+//    }
    let input= prompt('введите позицию коня')
    input.replace(' ','').replace('.','').replace(',','').toLowerCase()
    char=Number(letters.indexOf(input[0]))
@@ -68,11 +68,15 @@ window.onload=function(){
             if(flag){
                 possibilities.push(coordinates)
             }
-            coordinates=new Coord(Number(letters.indexOf(input[0])),Number(input[1]))
+            coordinates=new Coord(Number(letters.indexOf(input[0])),Number(input[1]-1))
         }
     }
-    let coord=new Coord(Number(letters.indexOf(input[0])),Number(input[1]))
+    let coord=new Coord(Number(letters.indexOf(input[0])),Number(input[1]-1))
     TryMove(KnightMoves,coord)
-
+    let message='возможные ходы: '
+    possibilities.forEach(function(element) {
+        message+=(letters[element.char]+(element.numb+1)+'; ')
+    });
+    alert(message)
 
 }
